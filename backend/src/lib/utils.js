@@ -15,6 +15,7 @@ export const generateToken = (userId,res) => {
         httpOnly: true, 
         sameSite:"strict",
         secure:ENV.NODE_ENV === "development" ? false : true,
+        path: "/",
     });
     return token;
 }
