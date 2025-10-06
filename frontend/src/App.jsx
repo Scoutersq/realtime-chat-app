@@ -31,8 +31,9 @@ function App() {
       <div className="absolute bottom-0 -right-4 size-96 bg-cyan-500 opacity-20 blur-[100px]" />
 
     <Routes>
-      <Route path="/chat" element={authUser ? <ChatPage /> : <Navigate to={"/"}/>} />
+      
       <Route path="/" element={!authUser ? <LoginPage /> : <Navigate to={"/chat"} />} />
+      <Route path="/chat" element={authUser ? <ChatPage /> : <Navigate to={"/"}/>} />
       <Route path="/signup" element={!authUser ? <SignupPage /> : <Navigate to={"/chat"} />} />
 
       <Route path ="/chat" element={
