@@ -4,7 +4,7 @@ import ChatPage from './pages/ChatPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import {useAuthStore} from './store/useAuthStore'
-import { useEffect } from 'react'
+import { Children, useEffect } from 'react'
 import PageLoader from './components/PageLoader'
 
 import { Toaster } from 'react-hot-toast'
@@ -17,6 +17,12 @@ function App() {
   }, [checkAuth])
 
   if(isCheckingAuth) return <PageLoader />
+
+  const ProtectedRoute = ({children}) =>{
+    if(!authUser) return <Navigate to="/login" />
+    return children;
+  }
+
   return (
     <div className='min-h-screen bg-slate-900 relative flex items-center justify-center p-4 overflow-hidden'>
 
@@ -28,6 +34,13 @@ function App() {
       <Route path="/" element={authUser ? <ChatPage /> : <Navigate to={"/login"}/>} />
       <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to={"/"} />} />
       <Route path="/signup" element={!authUser ? <SignupPage /> : <Navigate to={"/"} />} />
+
+      <Route path ="/chat" element={
+        <ProtectedRoute>
+          <ChatPage />
+        </ProtectedRoute>
+      }
+      />
     </Routes>
 
     <Toaster/>
